@@ -1,0 +1,106 @@
+
+
+  
+  <div class="row bg-black  ">
+    <div class=" col-2  bg-warning badge btn p-3  "style="height:48px;">
+       
+        <a routerLink="/transaction" class="fs-5 text-dark  " >Transaction History</a> 
+       
+    </div>
+    <div class=" col-8 ">
+        <h1 class=" bg-danger fs-1  text-dark  text-center">Cola Bank of india </h1>
+       
+    </div>
+
+        <div class=" badge col-2  btn p-3  bg-primary text-center "style="height:48px;">
+        <a routerLink='' class=" text-dark fs-4 "style="text-decoration:none ;">Sign Out</a>
+    </div>
+            
+</div>
+    <div class="text-center border w-100 bg-secondary p-3 ">
+        
+     
+
+        
+      <div class=" mb-3 mt-0">
+        <h3 class="bg-warning d-inline  ">Good Day To You <span style="color: red;">{{user}}</span></h3>
+      </div> 
+
+      <div class=" mb-3 ">
+        <h5 class="d-inline bg-info">Thank you for</h5>
+
+      </div>
+      <div class="mb-3">
+        <h1 class="d-inline  bg-primary "><strong>Banking With Us</strong></h1> 
+      </div>
+         
+        
+
+    </div>
+
+
+<div>
+        <div class="row ">
+                <div class="col-1    "></div>
+
+
+                    <div class="col m-3  border">
+                        <h1 class="m-5 p-1 text-center border bg-success">DEPOSIT</h1>
+
+                        <form  class=" border border-2 m-5  p-5">
+                          
+                            <div class="">
+                                <input  [(ngModel)]="acno1" type="text" name="unameReg" id="dep_uname" placeholder="Account Number" class="  mb-2 w-100"> <br>
+            
+                            </div> 
+                            <div class="">
+                                <input  [(ngModel)]="pswd1" type="text" name="acnoreg" id="dep_acno" placeholder="Password" class="  mb-2 w-100"> <br>
+            
+                            </div> 
+                            
+            
+                            <div class="">
+            
+                                <input [(ngModel)]="amt1" type="text" name="pswdReg" if="dep_pswd" placeholder="Amount" class=" mt-1 w-100 ">
+            
+                            </div> 
+            
+                            <button class="btn btn-success m-5 mt-3 mb-0 ms-0 w-100" (click)="deposit()" type="button">Deposit</button>
+                        
+                       
+                                </form>
+            
+                    </div>
+
+                    <div class="col  m-3 border">
+                        <h1 class="m-5 p-1  text-center border bg-info">WITHDRAW</h1>
+                        <form  class=" border border-2 m-5  p-5">
+                          
+                            <div class="">
+                                <input  [(ngModel)]="acno" type="text" name="unameWith" id="with_uname" placeholder="Account Number" class="  mb-2 w-100"> <br>
+            
+                            </div> 
+                            <div class="">
+                                <input  [(ngModel)]="pswd" type="text" name="acnoWith" id="with_acno" placeholder="Password" class="  mb-2 w-100"> <br>
+            
+                            </div> 
+                            
+            
+                            <div class="">
+            
+                                <input [(ngModel)]="amt" type="text" name="pswdWith" if="with_pswd" placeholder="Amount" class=" mt-1 w-100 ">
+            
+                            </div> 
+            
+                            <button class="btn btn-info m-5 mt-3 mb-0 ms-0 w-100" (click)="withdraw()" type="button">Withdraw</button>
+                        
+                       
+                                </form>
+
+                    </div>
+
+
+                <div class="col-1 "></div>
+        </div>
+
+</div>
