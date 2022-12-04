@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 
 
@@ -17,31 +18,67 @@ pswd='';
 amt1='';
 acno1='';
 pswd1='';
-  constructor(private ds:DataService)
+depositForm=this.fb.group({
+  acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
+  pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+  amt:['',[Validators.required,Validators.pattern('[0-9]*')]]
+ })
+ withdrawForm=this.fb.group({
+  acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
+  pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+  amt:['',[Validators.required,Validators.pattern('[0-9]*')]]
+ })
+  constructor(private ds:DataService,private fb:FormBuilder)
   {}
   deposit()
   {
-    var acno=this.acno1;
-    var pswd=this.pswd1;
-    var amount=this.amt1;
+if (this.depositForm.valid)
+
+    {
+      var acno=this.depositForm.value.acno;
+    var pswd=this.depositForm.value.pswd;
+    var amount=this.depositForm.value.amt;
+
+
     const result=(this.ds.deposit(acno,pswd,amount));
     if(result)
     {
-alert(`Amount Rs.${amount} Sucessfully Deposited \nBalance: Rs.${this.ds.userDetails[acno]['balance']}.00`)
-      var bal=this.ds.userDetails[acno]['balance'];
+      var bal=this.ds.userDetails[`${acno}`]['balance'];
+    
+alert(`Amount Rs.${amount} Sucessfully Deposited \nBalance: Rs.${bal}.00`)
     }
+  }
+  else
+  {
+    alert("Invalid Input");
+  }
   }
   withdraw()
   {
-    var acno=this.acno;
-    var pswd=this.pswd;
-    var amount=this.amt;
-    const result1=(this.ds.withdraw(acno,pswd,amount));
-    if(result1)
-    {
-      alert(`Amount Rs.${amount} Sucessfully Withdrawn\nBalance: Rs.${this.ds.userDetails[acno]['balance']}.00`)
-    }
+    if (this.withdrawForm.valid )
 
+    {
+            var acno=this.withdrawForm.value.acno;
+          var pswd=this.withdrawForm.value.pswd;
+          var amt=this.withdrawForm.value.amt;
+          const result=(this.ds.withdraw(acno,pswd,amt));
+    if(result)
+    {
+      var bal=this.ds.userDetails[`${acno}`]['balance'];
+
+      alert(`Amount Rs.${amt} Sucessfully Withdrawn\nBalance: Rs.${bal}`)
+    }
+    else
+        {
+         
+
+
+        }
+      }
+      else
+      {
+        alert("Invalid Input");
+      }
+    }
   }
 
-}

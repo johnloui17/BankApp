@@ -16,11 +16,19 @@ export class DataService {
     3:{acno:3,username:"Jude",password:3,balance:1000,transaction:[]},
   
   }
+  saveDetails(){
+    localStorage.setItem('DataBase',JSON.stringify(this.userDetails))
+    localStorage.setItem('currentUser',JSON.stringify(this.currentUser))
+    localStorage.setItem('currentAcno',JSON.stringify(this.currentAcno))
+    localStorage.setItem('Balance',JSON.stringify(this.userDetails[this.currentAcno]['balance']))
+
+  }
 
   register(acno1:any,username:any,pswd:any)
   {
     var acno=parseInt(acno1);
     var password=parseInt(pswd);
+
 
 
     let userDetails=this.userDetails;
@@ -30,8 +38,9 @@ export class DataService {
     }
     else{
       userDetails[acno]={
-        acno,username,password,balance:0,transaction:[]
+        acno,username,password,balance:1000,transaction:[]
       }
+      this.saveDetails();
       console.log(userDetails);
       return true;
     }
@@ -46,7 +55,9 @@ export class DataService {
         if(pswd==userDetails[acno]['password'])
     
              {     this.currentUser=userDetails[acno]['username'];
-             this.currentAcno=acno;
+             this.currentAcno=parseInt(acno);
+             this.saveDetails();
+
               return true;
 
             }   
@@ -60,73 +71,82 @@ export class DataService {
     }
     
   }
-  deposit(acno1:any,pswd:any,amt:any)
+  deposit(acno:any,pswd:any,amt:any)
   {
-    var acno=parseInt(acno1);
-    this.currentAcno=acno;
-
-    var amount=parseInt(amt);
-    let userDetails=this.userDetails;
-    if(acno in userDetails)
-    {
-      if(pswd == userDetails[acno]['password'])
-      {        
-        userDetails[acno]['balance']+=amount;
-        userDetails[acno]['transaction'].push({
-          Type:"Credit",
-          Amount:amount,
-          Account:acno,
-          Balance:this.userDetails[acno]['balance']
-       
-        })
-        console.log( userDetails[acno]['transaction']);
-        return true;
-        }
-       
+   
+      var acno1=parseInt(acno);
+    
       
-      else
-      {
-        alert("Password Incorrect");
-        return false;
-      }
-    }
+                var amount=parseInt(amt);
+                let userDetails=this.userDetails;
+                if(acno1 in userDetails && this.currentAcno==acno1)
+                {
+                  if(pswd == userDetails[acno1]['password'])
+                  {        
+                                userDetails[acno1]['balance']+=amount;
+                                userDetails[acno1]['transaction'].push
+                                ({
+                                  Type:"Credit",
+                                  Amount:amount,
+                                  Account:acno,
+                                  Balance:this.userDetails[acno1]['balance']
+                              
+                                })
+                                this.saveDetails();
+
+                                console.log( userDetails[acno1]['transaction']);
+                                return true;
+                  }     
+                  else
+                  {
+                                alert("Password Incorrect");
+                                return false;
+                  }
+                }
+                
+                else
+                  {
+                    alert("Account Not In System ");
+                    return false;
+                  }
+                
+                }
+            
+                    
     
-      else
-      {
-        alert("Account Not In System ");
-        return false;
-      }
-    }
+  
 
   
     
 
   
-  withdraw(acno1:any,pswd:any,amt:any)
+  withdraw(acno:any,pswd:any,amt:any)
   {
-    var acno=parseInt(acno1);
-
+    var acno1=parseInt(acno);
+console.log(acno1);
     var amount=parseInt(amt);
     let userDetails=this.userDetails;
-    if(acno in userDetails)
+    if(acno1 in userDetails && this.currentAcno==acno1)
     {
-      if(pswd == userDetails[acno]['password'])
+      if(pswd == userDetails[acno1]['password'])
       {
-        if(userDetails[acno]['balance']>amount)
+        if(userDetails[acno1]['balance']>amount)
         {
         
-        userDetails[acno]['balance']-=amount;
-        userDetails[acno]['transaction'].push({
+        userDetails[acno1]['balance']-=amount;
+        userDetails[acno1]['transaction'].push({
           Type:"Debit",
           Amount:amount,
-          Account:acno,
-          Balance:this.userDetails[acno]['balance']
+          Account:acno1,
+          Balance:this.userDetails[acno1]['balance']
         })
-        console.log( userDetails[acno]['transaction']);
+        this.saveDetails();
+
+        console.log( userDetails[acno1]['transaction']);
         return true;
         }
         else{
-          alert(`Insufficeint Balance!!\nAmount To Withdraw : ${amount}\nAvailable Balance : ${this.userDetails[acno]['balance']}\nMonthly Minimum Balance : Rs${1}`);
+          alert(`Insufficeint Balance!!\nAmount To Withdraw : ${amount}\nAvailable Balance : ${this.userDetails[acno1]['balance']}\nMonthly Minimum Balance : Rs${1}`);
           return false
         }
       }
@@ -147,7 +167,7 @@ export class DataService {
   getTransaction(acno:any){
     let userDetails=this.userDetails;
     
-    return userDetails[1]['transaction']
+    return userDetails[acno]['transaction']
   }
   
 }

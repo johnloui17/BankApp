@@ -14,7 +14,7 @@
                 <div class="col"></div>
 
                 <div class="col-4  mb-0">
-                    <form class=" border border-2 m-5 mb-0 p-5">
+                    <form  [formGroup]="loginForm" class=" border border-2 m-5 mb-0 p-5">
                     <h3>Welcome !.</h3>
                     <p class="fs-6 "><strong>Ready</strong> to view your <strong>BANK </strong></p>
                 
@@ -57,15 +57,17 @@
 
 
                     <div class="">
-                        <input required [(ngModel)]="acno" type="text" name="acno" id="login_acno" [placeholder]="account" class="  mb-2 w-100"> <br>
-
+                        <input required formControlName="acno" type="text" name="acno" id="login_acno" [placeholder]="account" class="  mb-2 w-100"> 
+                        <div class="text-center " *ngIf="this.loginForm.get('acno')?.errors && this.loginForm.get('acno')?.touched"  
+                        style="color: red;"> <h6 class="">Invalid Account Number</h6></div> 
                     </div> 
                     
 
                     <div class="">
 
-                        <input [(ngModel)]="pswd" type="password" name="pswd" if="login_pswd" [placeholder]="password" class=" mt-1 w-100 ">
-
+                        <input formControlName="pswd" type="password" name="pswd" if="login_pswd" [placeholder]="password" class=" mt-1 w-100 ">
+  <div class="text-center " *ngIf="this.loginForm.get('pswd')?.errors && this.loginForm.get('pswd')?.touched"  
+ style="color: red;"> <h6 class="">Invalid Password</h6></div> 
                     </div> 
 
                     <button class="btn btn-success m-5 mt-3 mb-0 ms-0 w-100" (click)="login()" type="button">login</button>

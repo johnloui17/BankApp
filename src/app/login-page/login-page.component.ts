@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DataService } from '../data.service';
 
@@ -18,11 +19,16 @@ export class LoginPageComponent implements OnInit
   //data
   acno='';
   pswd="";
+  loginForm=this.fb.group({
+    acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
+    pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+   })
 
 
 
-constructor(public ds:DataService,public router:Router)
+constructor(public ds:DataService,public router:Router,private fb:FormBuilder)
 {}
+
 
 ngOnInit(): void{
 
@@ -87,11 +93,13 @@ ngOnInit(): void{
 
 login()
 {
-  var acno=this.acno;
-  var pswd=this.pswd;
+  var acno=this.loginForm.value.acno;
+  var pswd=this.loginForm.value.pswd;
+  console.log(this.loginForm.valid);
 
 
-  const result=this.ds.login(acno,pswd);
+if(this.loginForm.valid) 
+{ const result=this.ds.login(acno,pswd);
   if(result){
     alert("Login Succesful");
     this.router.navigateByUrl('home')
@@ -103,5 +111,10 @@ login()
 
   }
 }
+else{
+  alert("Input data InCorrect");
+}
+}
+
   
 }

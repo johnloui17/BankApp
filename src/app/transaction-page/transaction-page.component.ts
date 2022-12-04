@@ -14,6 +14,7 @@ export class TransactionPageComponent implements OnInit{
     
   
 constructor(public ds:DataService){
+  
   this.acno=this.ds.currentAcno;
 
 

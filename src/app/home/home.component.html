@@ -45,24 +45,27 @@
 
 
                     <div class="col m-3  border">
+                     
                         <h1 class="m-5 p-1 text-center border bg-success">DEPOSIT</h1>
 
-                        <form  class=" border border-2 m-5  p-5">
-                          
+                        <form [formGroup]="depositForm" class=" border border-2 m-5  p-5">
                             <div class="">
-                                <input  [(ngModel)]="acno1" type="text" name="unameReg" id="dep_uname" placeholder="Account Number" class="  mb-2 w-100"> <br>
-            
+                                <input  formControlName="acno" type="text" name="unameReg" id="dep_acno" placeholder="Account Number" class="  mb-2 w-100"> <br>
+                                <div class="text-center " *ngIf="this.depositForm.get('acno')?.errors && this.depositForm.get('acno')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Account</h5></div> 
                             </div> 
                             <div class="">
-                                <input  [(ngModel)]="pswd1" type="text" name="acnoreg" id="dep_acno" placeholder="Password" class="  mb-2 w-100"> <br>
-            
+                                <input  formControlName="pswd" type="text" name="acnoreg" id="dep_pswd" placeholder="Password" class="  mb-2 w-100"> <br>
+                                <div class="text-center " *ngIf="this.depositForm.get('pswd')?.errors && this.depositForm.get('pswd')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Password</h5></div> 
                             </div> 
                             
             
                             <div class="">
             
-                                <input [(ngModel)]="amt1" type="text" name="pswdReg" if="dep_pswd" placeholder="Amount" class=" mt-1 w-100 ">
-            
+                                <input formControlName="amt" type="text" name="pswdReg" if="dep_amt" placeholder="Amount" class=" mt-1 w-100 ">
+                                <div class="text-center " *ngIf="this.depositForm.get('amt')?.errors && this.depositForm.get('amt')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Amount</h5></div> 
                             </div> 
             
                             <button class="btn btn-success m-5 mt-3 mb-0 ms-0 w-100" (click)="deposit()" type="button">Deposit</button>
@@ -74,22 +77,25 @@
 
                     <div class="col  m-3 border">
                         <h1 class="m-5 p-1  text-center border bg-info">WITHDRAW</h1>
-                        <form  class=" border border-2 m-5  p-5">
+                        <form [formGroup]="withdrawForm"  class=" border border-2 m-5  p-5">
                           
                             <div class="">
-                                <input  [(ngModel)]="acno" type="text" name="unameWith" id="with_uname" placeholder="Account Number" class="  mb-2 w-100"> <br>
-            
+                                <input  formControlName="acno" type="text" name="unameWith" id="with_acno" placeholder="Account Number" class="  mb-2 w-100"> <br>
+                                <div class="text-center " *ngIf="this.withdrawForm.get('acno1')?.errors && this.withdrawForm.get('acno1')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Account Number</h5></div> 
                             </div> 
                             <div class="">
-                                <input  [(ngModel)]="pswd" type="text" name="acnoWith" id="with_acno" placeholder="Password" class="  mb-2 w-100"> <br>
-            
+                                <input  formControlName="pswd" type="password" name="acnoWith" id="with_pswd" placeholder="Password" class="  mb-2 w-100"> <br>
+                                <div class="text-center " *ngIf="this.withdrawForm.get('pswd1')?.errors && this.withdrawForm.get('pswd1')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Password</h5></div> 
                             </div> 
                             
             
                             <div class="">
             
-                                <input [(ngModel)]="amt" type="text" name="pswdWith" if="with_pswd" placeholder="Amount" class=" mt-1 w-100 ">
-            
+                                <input formControlName="amt" type="text" name="pswdWith" if="with_amt" placeholder="Amount" class=" mt-1 w-100 ">
+                                <div class="text-center " *ngIf="this.withdrawForm.get('amt1')?.errors && this.withdrawForm.get('amt1')?.touched"  
+                                style="color: red;"> <h5 class="">Invalid Amount</h5></div> 
                             </div> 
             
                             <button class="btn btn-info m-5 mt-3 mb-0 ms-0 w-100" (click)="withdraw()" type="button">Withdraw</button>
