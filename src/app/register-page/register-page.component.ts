@@ -17,8 +17,8 @@ export class RegisterPageComponent implements OnInit {
 
   //data
   uname='';
-  acno1='';
-  pswd1='';
+  acno='';
+  pswd='';
 
 
 constructor(public ds:DataService,public router:Router,private fb:FormBuilder)
@@ -35,33 +35,48 @@ registerForm=this.fb.group({
 
 
 
+// register()
+// {
+//   console.log(this.registerForm.get('uname')?.errors);
+
+//   var uname=this.registerForm.value.uname;
+//   var acno1=this.registerForm.value.acno1;
+//   var pswd1=this.registerForm.value.pswd1;
+// if((this.registerForm.valid))
+
+// {  const result=this.ds.register(acno1,uname,pswd1);
+//   if(result)
+//   {
+//     alert("Register Successful");
+//     this.router.navigateByUrl('');
+//   }  
+//   else{
+//     alert("User Already Registered ");
+//     this.router.navigateByUrl('register');
+//   }}
+
+// else{
+//   alert("Invalid Type Data");
+// }
+// }
+
+
 register()
 {
   console.log(this.registerForm.get('uname')?.errors);
 
-  var uname=this.registerForm.value.uname;
-  var acno1=this.registerForm.value.acno1;
-  var pswd1=this.registerForm.value.pswd1;
-if((this.registerForm.valid))
-
-{  const result=this.ds.register(acno1,uname,pswd1);
-  if(result)
-  {
-    alert("Register Successful");
-    this.router.navigateByUrl('');
-  }  
-  else{
-    alert("User Already Registered ");
-    this.router.navigateByUrl('register');
-  }}
-
-else{
-  alert("Invalid Type Data");
+  var username=this.registerForm.value.uname;
+  var acno=this.registerForm.value.acno1;
+  var password=this.registerForm.value.pswd1;
+if((this.registerForm.valid)){ 
+   this.ds.register(acno,username,password)
+    .subscribe((result:any)=>{
+      alert(result.message);
+      this.router.navigateByUrl('');
+    })
 }
-
-
-
-
+// else{
+//   alert("invalid Form")
+// }
 }
 }
-

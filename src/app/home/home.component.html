@@ -2,9 +2,9 @@
 
   
   <div class="row bg-black  ">
-    <div class=" col-2  bg-warning badge btn p-3  "style="height:48px;">
+    <div class=" col-lg-2 bg-warning badge btn p-3  "style="height:48px;">
        
-        <a routerLink="/transaction" class="fs-5 text-dark  " >Transaction History</a> 
+        <a routerLink="/transaction" class="fs-5 text-dark  " >Transaction  History</a> 
        
     </div>
     <div class=" col-8 ">
@@ -12,36 +12,46 @@
        
     </div>
 
-        <div class=" badge col-2  btn p-3  bg-primary text-center "style="height:48px;">
-        <a routerLink='' class=" text-dark fs-4 "style="text-decoration:none ;">Sign Out</a>
+        <div class=" badge col-2  btn p-3  bg-primary text-center "style="height:48px;"(click)="logout()">
+        <a  class=" text-dark fs-4 "style="text-decoration:none ;">Sign Out</a>
     </div>
             
 </div>
-    <div class="text-center border w-100 bg-secondary p-3 ">
-        
-     
+<app-delete [item]="acno" (onCancel)="onCancel()" (onDelete)="onDelete($event)"></app-delete>
+
+<div [ngClass]="acno? 'style1':''">
+    <div class="row border  bg-secondary "> 
+        <div class="col-4">
+            <h4>{{sdate|date:'short'}}</h4>
+        </div>
+        <div class="col-4 mt-0 d-flex justify-content-center ">
+            <h3 class="bg-warning d-inline  ">Good Day To You <span style="color: red;">{{user}}</span></h3>
+        </div>
+
+        <div class=" col-4  d-flex text-center justify-content-end ">
+            <a  class=" btn btn-danger p-2 text-dark fs-6 "(click)="delete()">Delete</a>
+        </div>
 
         
-      <div class=" mb-3 mt-0">
-        <h3 class="bg-warning d-inline  ">Good Day To You <span style="color: red;">{{user}}</span></h3>
-      </div> 
-
+   
+<!-- 
       <div class=" mb-3 ">
         <h5 class="d-inline bg-info">Thank you for</h5>
 
       </div>
       <div class="mb-3">
         <h1 class="d-inline  bg-primary "><strong>Banking With Us</strong></h1> 
-      </div>
-         
-        
-
+      </div> -->
     </div>
+</div>
+    
+        
+    
 
 
-<div>
+<div [ngClass]="acno? 'style1':''"class="bg-dark">
         <div class="row ">
-                <div class="col-1    "></div>
+                <div class="col-1"></div>
 
 
                     <div class="col m-3  border">
@@ -50,12 +60,12 @@
 
                         <form [formGroup]="depositForm" class=" border border-2 m-5  p-5">
                             <div class="">
-                                <input  formControlName="acno" type="text" name="unameReg" id="dep_acno" placeholder="Account Number" class="  mb-2 w-100"> <br>
+                                <input  formControlName="acno" type="text" name="acno" id="dep_acno" placeholder="Account Number" class="  mb-2 w-100"> <br>
                                 <div class="text-center " *ngIf="this.depositForm.get('acno')?.errors && this.depositForm.get('acno')?.touched"  
                                 style="color: red;"> <h5 class="">Invalid Account</h5></div> 
                             </div> 
                             <div class="">
-                                <input  formControlName="pswd" type="text" name="acnoreg" id="dep_pswd" placeholder="Password" class="  mb-2 w-100"> <br>
+                                <input  formControlName="pswd" type="text" name="pswd" id="dep_pswd" placeholder="Password" class="  mb-2 w-100"> <br>
                                 <div class="text-center " *ngIf="this.depositForm.get('pswd')?.errors && this.depositForm.get('pswd')?.touched"  
                                 style="color: red;"> <h5 class="">Invalid Password</h5></div> 
                             </div> 
@@ -63,7 +73,7 @@
             
                             <div class="">
             
-                                <input formControlName="amt" type="text" name="pswdReg" if="dep_amt" placeholder="Amount" class=" mt-1 w-100 ">
+                                <input formControlName="amt" type="text" name="amt" if="dep_amt" placeholder="Amount" class=" mt-1 w-100 ">
                                 <div class="text-center " *ngIf="this.depositForm.get('amt')?.errors && this.depositForm.get('amt')?.touched"  
                                 style="color: red;"> <h5 class="">Invalid Amount</h5></div> 
                             </div> 

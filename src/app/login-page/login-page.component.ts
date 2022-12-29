@@ -94,27 +94,26 @@ ngOnInit(): void{
 login()
 {
   var acno=this.loginForm.value.acno;
-  var pswd=this.loginForm.value.pswd;
+  var password=this.loginForm.value.pswd;
   console.log(this.loginForm.valid);
 
+  if(this.loginForm.valid){ 
+    this.ds.login(acno,password)
+     .subscribe((result:any)=>{
+      localStorage.setItem('currentUser',JSON.stringify(result.currentUser));
+      localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno));
+      localStorage.setItem('Balance',JSON.stringify(result.balance));
+      localStorage.setItem('token',JSON.stringify(result.token));
 
-if(this.loginForm.valid) 
-{ const result=this.ds.login(acno,pswd);
-  if(result){
-    alert("Login Succesful");
-    this.router.navigateByUrl('home')
+       alert(result.message);
+       this.router.navigateByUrl('home')
+     },
+     result=>{
+      alert(result.error.message)
+     })}
+    else{
+      alert("data invalid");
+    }
 
-  }
-  else{
-    alert("Login Failed");
-
-
-  }
 }
-else{
-  alert("Input data InCorrect");
-}
-}
-
-  
 }

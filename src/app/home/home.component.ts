@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 
@@ -9,15 +10,25 @@ import { DataService } from '../data.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
+  user="";
+  amt='';
+  acno='';
+  pswd='';
+  amt1='';
+  acno1='';
+  pswd1='';
+  sdate:any;
+
   ngOnInit(): void {
-  }
-  user=this.ds.currentUser;
-amt='';
-acno='';
-pswd='';
-amt1='';
-acno1='';
-pswd1='';
+    if(!localStorage.getItem('currentUser'))
+    {
+      alert("please login first ");
+      this.router.navigateByUrl('');
+    }
+    this.user=JSON.parse(localStorage.getItem('currentUser')||'');
+
+console.log()  }
+ 
 depositForm=this.fb.group({
   acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
   pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
@@ -28,8 +39,17 @@ depositForm=this.fb.group({
   pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
   amt:['',[Validators.required,Validators.pattern('[0-9]*')]]
  })
-  constructor(private ds:DataService,private fb:FormBuilder)
-  {}
+  constructor(private ds:DataService,private fb:FormBuilder,private router:Router)
+  {
+  if(localStorage.getItem('currentUser'))
+   { this.user=JSON.parse(localStorage.getItem('currentUser')||'');}
+    this.sdate=new Date();
+  }
+  delete()
+  {
+    // this.router.navigateByUrl('delete');
+    this.acno=JSON.parse(localStorage.getItem('currentAcno')||'');
+  }
   deposit()
   {
 if (this.depositForm.valid)
@@ -38,47 +58,57 @@ if (this.depositForm.valid)
       var acno=this.depositForm.value.acno;
     var pswd=this.depositForm.value.pswd;
     var amount=this.depositForm.value.amt;
+    this.ds.deposit(acno,pswd,amount)
+    .subscribe((result:any)=>{
+    alert(result.message);
+    },
+    result=>{
+    alert(result.error.message)
 
-
-    const result=(this.ds.deposit(acno,pswd,amount));
-    if(result)
-    {
-      var bal=this.ds.userDetails[`${acno}`]['balance'];
-    
-alert(`Amount Rs.${amount} Sucessfully Deposited \nBalance: Rs.${bal}.00`)
-    }
+    })
   }
-  else
+  }
+  logout()
   {
-    alert("Invalid Input");
-  }
-  }
+localStorage.removeItem('currentAcno'); 
+localStorage.removeItem('currentUser');  
+localStorage.removeItem('token'); 
+localStorage.removeItem('Balance'); 
+
+this.router.navigateByUrl('');
+
+ }
   withdraw()
   {
-    if (this.withdrawForm.valid )
-
-    {
+  
             var acno=this.withdrawForm.value.acno;
           var pswd=this.withdrawForm.value.pswd;
-          var amt=this.withdrawForm.value.amt;
-          const result=(this.ds.withdraw(acno,pswd,amt));
-    if(result)
-    {
-      var bal=this.ds.userDetails[`${acno}`]['balance'];
-
-      alert(`Amount Rs.${amt} Sucessfully Withdrawn\nBalance: Rs.${bal}`)
-    }
-    else
-        {
-         
-
-
+          var amount=this.withdrawForm.value.amt;
+          if (this.withdrawForm.valid )
+          {
+   
+          this.ds.withdraw(acno,pswd,amount)
+          .subscribe((result:any)=>{
+          alert(result.message);
+          },
+          result=>{
+          alert(result.error.message)
+      
+          })
         }
       }
-      else
-      {
-        alert("Invalid Input");
-      }
+    onCancel(){
+      this.acno='';
+    }
+    onDelete(event:any){
+      this.ds.deleteAcc(event)
+      .subscribe((result:any)=>{
+        alert(result.message)
+this.logout()    ;  },
+      result=>{
+        alert(result.error.message);
+      })
     }
   }
+
 

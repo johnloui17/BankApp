@@ -31,7 +31,7 @@
                 </div> 
                 <div class="">
                     <input  formControlName="acno1" type="text" name="acnoreg" id="sign_acno" placeholder="Account Number" class="  mb-3 mt-3 w-100"> <br>
-                    <div class="text-center " *ngIf="this.registerForm.get('acno1')?.errors && this.registerForm.get('uname')?.touched"  
+                    <div class="text-center " *ngIf="this.registerForm.get('acno1')?.errors && this.registerForm.get('acno1')?.touched"  
                     style="color: red;"> <h5 class="">Invalid Account Number</h5></div>
                 </div> 
                 
@@ -39,7 +39,7 @@
                 <div class="">
 
                     <input formControlName="pswd1" type="password" name="pswdReg" if="sign_pswd" placeholder="Password" class="  w-100 ">
-                    <div class="text-center " *ngIf="this.registerForm.get('pswd1')?.errors && this.registerForm.get('uname')?.touched"  
+                    <div class="text-center " *ngIf="this.registerForm.get('pswd1')?.errors && this.registerForm.get('pswd1')?.touched"  
                     style="color: red;"> <h5 class="">Invalid Password</h5></div>
                 </div> 
 

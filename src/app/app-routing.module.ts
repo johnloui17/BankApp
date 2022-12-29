@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DeleteComponent } from './delete/delete.component';
 import { HomeComponent } from './home/home.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
@@ -16,6 +17,9 @@ const routes: Routes = [
   },
   {
     path:"transaction",component:TransactionPageComponent
+  },
+  {
+    path:"delete",component:DeleteComponent
   },
 
 ];
